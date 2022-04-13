@@ -12,10 +12,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         pm = FindObjectOfType<PlayerMover>();
         PlayerShooter.singleton.OnPlayerShoot += PlayerShootAnimation;
+        BrokenMachine.OnRepair += PlayerRepairAnimation;
     }
     private void OnDisable()
     {
         PlayerShooter.singleton.OnPlayerShoot -= PlayerShootAnimation;
+        BrokenMachine.OnRepair -= PlayerRepairAnimation;
     }
     private void Update()
     {
@@ -31,5 +33,9 @@ public class PlayerAnimation : MonoBehaviour
     private void PlayerShootAnimation()
     {
         animator.Play("Attack");
+    }
+    private void PlayerRepairAnimation(float time)
+    {
+        animator.Play("Repair");
     }
 }

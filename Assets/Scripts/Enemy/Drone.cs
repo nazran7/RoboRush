@@ -14,20 +14,28 @@ public class Drone : MonoBehaviour
     [SerializeField] private GameObject shootingParticles;
     [SerializeField] private GameObject explosionParticles;
     [SerializeField] private int health;
+
+    private bool isPlayerOnZone = false;
+    private IEnumerator movingCoroutine;
+    private IEnumerator shootingCoroutine;
+    private Vector3 startPos;
+    private Vector3 endPos;
     private void Start()
     {
+        startPos = transform.position;
+        endPos = transform.position + movingPoint;
         StartMoving();
     }
     #region moving
     private void StartMoving()
     {
-        StopAllCoroutines();
-        StartCoroutine(MoveTo());
+        movingCoroutine = MoveTo();
+        if (shootingCoroutine != null)
+            StopCoroutine(shootingCoroutine);
+        StartCoroutine(movingCoroutine);
     }
     private IEnumerator MoveTo()
     {
-        Vector3 startPos = transform.position;
-        Vector3 endPos = transform.position + movingPoint;
         while (true)
         {
             Rotation(endPos.x);
@@ -68,6 +76,7 @@ public class Drone : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerStatus>() != null)
         {
+            isPlayerOnZone = true;
             StartShooting(collision.gameObject);
         }
     }
@@ -75,36 +84,53 @@ public class Drone : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerStatus>() != null)
         {
+            isPlayerOnZone = false;
             StartMoving();
         }
     }
     private IEnumerator ShootingLoop(GameObject target)
     {
-        while (true)
+        while (isPlayerOnZone)
         {
             Rotation(target.transform.position.x);
             yield return new WaitForSeconds(shootingRate);
             Vector2 shootingDir = new Vector2(target.transform.position.x - transform.position.x
                 , target.transform.position.y - transform.position.y).normalized;
-            GameObject projectileGO = Instantiate(projectile, shootingPoint);
-            Destroy(Instantiate(shootingParticles, shootingPoint), 1f);
+            GameObject projectileGO = Instantiate(projectile,
+                shootingPoint.transform.position, Quaternion.identity);
+            Destroy(Instantiate(shootingParticles,
+                shootingPoint.transform.position, Quaternion.identity), 1f);
             projectileGO.GetComponent<Rigidbody2D>().AddForce(shootingDir * projectileSpeed);
             projectileGO.GetComponent<DroneProjectile>().Damage = projectileDamege;
             Destroy(projectileGO, 2f);
         }
     }
+    private bool VisibleCheck(GameObject target)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position);
+        print(hit.collider.gameObject);
+        if (hit.collider.gameObject.GetComponent<PlayerStatus>() != null)
+            return true;
+        else
+            return false;
+    }
     private void StartShooting(GameObject target)
     {
-        StopAllCoroutines();
-        StartCoroutine(ShootingLoop(target));
+        shootingCoroutine = ShootingLoop(target);
+        if (movingCoroutine != null)
+            StopCoroutine(movingCoroutine);
+        StartCoroutine(shootingCoroutine);
     }
 
+    public delegate void EnemyDestroyEvent();
+    public static EnemyDestroyEvent OnEnemyDestroy;
     public void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
         {
             health = 0;
+            OnEnemyDestroy?.Invoke();
             Destroy(Instantiate(explosionParticles, transform), 3f);
             Destroy(gameObject);
         }

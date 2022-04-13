@@ -14,40 +14,56 @@ public class PlayerJetPack : MonoBehaviour
     [SerializeField] private GameObject fuelBar;
     [SerializeField] private GameObject particles;
     [SerializeField] private Transform particlesPoint;
+    [SerializeField] private SpriteRenderer[] legs;
+    [SerializeField] private Sprite[] legsSprites;
 
     [SerializeField] private JetPackLevel[] levels;
+    [SerializeField] private int jetPackLevel;
+
+    public bool isFlyInput { get; set; }
 
     private Rigidbody2D rb;
     private int fuel;
     private bool isCanFly = true;
     private void Start()
     {
+        JetPackLevelInitialize();
         fuel = fuelMax;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(JetPackFly());
         StartCoroutine(FuelRecharge());
     }
 
-    private IEnumerator JetPackFly()
+    private void JetPackLevelInitialize()
     {
-        while (true)
+        jetPackLevel = SaveSystem.LoadData(SaveSystem.Type.jetPackLevel);
+        foreach (SpriteRenderer sr in legs)
+        {
+            sr.sprite = legsSprites[jetPackLevel];
+        }
+        fuelMax = levels[jetPackLevel].MaxFuel;
+        fuelSpend = levels[jetPackLevel].Spending;
+        jetPackForce = levels[jetPackLevel].Force;
+        fuelRecharge = levels[jetPackLevel].Recharge;
+    }
+    public delegate void JetPackFlyEvent();
+    public static JetPackFlyEvent OnJetPackFly;
+
+    private void FixedUpdate()
+    {
+        JetPackFly();
+    }
+    private void JetPackFly()
+    {
+        if (isFlyInput && isCanFly)
         {
 
-            if (Input.GetKeyDown(jetPackKey) && isCanFly )
-            {
-
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
-                while (Input.GetKey(jetPackKey) && isCanFly )
-                {
-                    FuelChange(-fuelSpend);
-                    //rb.AddForce(new Vector2(0, jetPackForce));
-                    rb.velocity = new Vector2(rb.velocity.x, jetPackForce);
-                    Destroy(Instantiate(particles, particlesPoint), 0.5f);
-                    yield return new WaitForFixedUpdate();
-                }
-            }
-            else
-                yield return null;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
+            
+                OnJetPackFly?.Invoke();
+                FuelChange(-fuelSpend);
+                //rb.AddForce(new Vector2(0, jetPackForce));
+                rb.velocity = new Vector2(rb.velocity.x, jetPackForce);
+                Destroy(Instantiate(particles, particlesPoint), 0.5f);
         }
     }
 
@@ -88,15 +104,8 @@ public class PlayerJetPack : MonoBehaviour
 [System.Serializable]
 public class JetPackLevel
 {
-    [SerializeField] private float fuelForce;
-    [SerializeField] private int fuelSpending;
-    [SerializeField] private int fuelMax;
-
-
-    public JetPackLevel(float force, int spending, int maxFuel)
-    {
-        fuelForce = force;
-        fuelSpending = spending;
-        fuelMax = maxFuel;
-    }
+    [SerializeField] public float Force;
+    [SerializeField] public int Spending;
+    [SerializeField] public int MaxFuel;
+    [SerializeField] public int Recharge;
 }

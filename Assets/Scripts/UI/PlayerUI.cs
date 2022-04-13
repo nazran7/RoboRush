@@ -17,7 +17,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private int timeForLevel;
     [SerializeField] private Image healthBar;
-    private void Start()
+    private void OnEnable()
     {
         PlayerInventory.singleton.OnCoinChange += CoinUIChange;
         PlayerStatus.singleton.OnTakeDamage += HealthBarChange;

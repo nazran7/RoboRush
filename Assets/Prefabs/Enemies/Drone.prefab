@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.82
-  movingPoint: {x: 1.01, y: 0, z: 0}
+  movingPoint: {x: 1.55, y: 0, z: 0}
   projectile: {fileID: 3203136300890160501, guid: 0dc4f711006004545a7e6b546f0b3d8f, type: 3}
   shootingRate: 1
   projectileSpeed: 400

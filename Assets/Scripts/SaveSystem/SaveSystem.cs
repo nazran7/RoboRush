@@ -1,44 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
-public static class SaveSystem
+public class SaveSystem : MonoBehaviour
 {
-    public static void SaveData(DataToSave dts)
+    public enum Type
     {
-        string path = Application.persistentDataPath + "/save.sav";
-
-        BinaryFormatter formater = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        formater.Serialize(stream, dts);
-        stream.Close();
+        coins,
+        jetPackLevel,
+        boostLevel,
+        healthLevel,
+        weaponLevel,
+        openedLevels
+    }
+    public static void SaveData(Type type, int currentCount)
+    {
+        PlayerPrefs.SetInt(type.ToString(), currentCount);
+    }
+    public static int LoadData(Type type)
+    {
+        return PlayerPrefs.GetInt(type.ToString());
     }
 
-    public static DataToSave LoadData()
-    {
-        string path = Application.persistentDataPath + "/save.sav";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            DataToSave dts = formatter.Deserialize(stream) as DataToSave;
-
-            return dts;
-        }
-        else
-        {
-            Debug.LogError("Save dosn't exists");
-            return null;
-        }
-    }
-    public static bool IsSaveExists()
-    {
-        string path = Application.persistentDataPath + "/save.sav";
-        if (!File.Exists(path))
-            return false;
-        else
-            return true;
-    }
 }

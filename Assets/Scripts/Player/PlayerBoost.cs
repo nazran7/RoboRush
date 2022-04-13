@@ -9,50 +9,57 @@ public class PlayerBoost : MonoBehaviour
     [SerializeField] private int fuelMax;
     [SerializeField] private int fuelSpend;
     [SerializeField] private int fuelRecharge;
+    [SerializeField] private Transform flyDirection;
 
+    [Header("Cosmetic effects")]
     [SerializeField] private GameObject fuelBar;
     [SerializeField] private GameObject particles;
     [SerializeField] private Transform particlesPoint;
-    [SerializeField] private Transform flyDirection;
+    [SerializeField] private SpriteRenderer arm;
+    [SerializeField] private Sprite[] armSprites;
 
     [SerializeField] private BoostLevel[] levels;
+    [SerializeField] private int boostLevel;
 
-
+    public bool isFlyInput { get; set; }
     private Rigidbody2D rb;
     private int fuel;
     private bool isFuelEnd = false;
     private bool isCanFly = true;
     private void Start()
     {
+        BoostLevelInitialize();
         fuel = fuelMax;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(KeyPressDelay());
         StartCoroutine(FuelRecharge());
     }
-
-    private IEnumerator KeyPressDelay()
+    private void BoostLevelInitialize()
     {
-        while (true)
+        boostLevel = SaveSystem.LoadData(SaveSystem.Type.boostLevel);
+        arm.sprite = armSprites[boostLevel];
+        fuelMax = levels[boostLevel].MaxFuel;
+        fuelSpend = levels[boostLevel].Spending;
+        boostForce = levels[boostLevel].Force;
+        fuelRecharge = levels[boostLevel].Recharge;
+    }
+    public delegate void BoostFlyEvent();
+    public static BoostFlyEvent OnBoostFly;
+    private void FixedUpdate()
+    {
+        BoostFly();
+    }
+    private void BoostFly()
+    {
+
+        if (isCanFly && isFlyInput)
         {
+            OnBoostFly?.Invoke();
+            FuelChange(-fuelSpend);
 
-            //if (Input.GetKeyDown(jetPackKey) && isCanFly && !PlayerMover.singleton.IsGrounded)
-            //{
-
-            //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
-            //}
-
-            if (Input.GetKey(boostKey) && isCanFly)
-            {
-                FuelChange(-fuelSpend);
-
-                Vector2 dir = new Vector2(transform.position.x - flyDirection.position.x,
-                    transform.position.y - flyDirection.position.y);
-                rb.AddForce(-dir * boostForce);
-                Destroy(Instantiate(particles, particlesPoint), 0.5f);
-                yield return new WaitForFixedUpdate();
-            }
-            else
-                yield return null;
+            Vector2 dir = new Vector2(transform.position.x - flyDirection.position.x,
+                transform.position.y - flyDirection.position.y);
+            rb.AddForce(-dir * boostForce);
+            Destroy(Instantiate(particles, particlesPoint), 0.5f);
         }
     }
 
@@ -93,7 +100,8 @@ public class PlayerBoost : MonoBehaviour
 [System.Serializable]
 public class BoostLevel
 {
-    [SerializeField] private float fuelForce;
-    [SerializeField] private int fuelSpending;
-    [SerializeField] private int fuelMax;
+    [SerializeField] public float Force;
+    [SerializeField] public int Spending;
+    [SerializeField] public int MaxFuel;
+    [SerializeField] public int Recharge;
 }

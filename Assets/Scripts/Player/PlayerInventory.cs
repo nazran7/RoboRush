@@ -18,10 +18,15 @@ public class PlayerInventory : MonoBehaviour
     private void Start()
     {
         PlayerItemPicker.singleton.OnCoinTake += CoinCountChange;
+        BrokenMachine.OnCoinAdd += CoinCountChange;
+
+        coins = SaveSystem.LoadData(SaveSystem.Type.coins);
+        CoinCountChange(0);
     }
     private void OnDisable()
     {
         PlayerItemPicker.singleton.OnCoinTake -= CoinCountChange;
+        BrokenMachine.OnCoinAdd -= CoinCountChange;
     }
 
     public delegate void OnCoinsCountChangeEvent(int currentCount);
@@ -29,11 +34,13 @@ public class PlayerInventory : MonoBehaviour
     private void CoinCountChange(int count)
     {
         int minusCheck = coins + count;
-        if (minusCheck > 0)
+        if (minusCheck >= 0)
         {
             coins += count;
+            SaveSystem.SaveData(SaveSystem.Type.coins, coins);
             OnCoinChange?.Invoke(coins);
         }
     }
+
 
 }

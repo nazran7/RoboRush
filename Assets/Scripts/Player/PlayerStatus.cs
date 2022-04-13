@@ -13,20 +13,35 @@ public class PlayerStatus : MonoBehaviour
     #endregion
     [SerializeField] public int maxHealth;
     [SerializeField] private float fallCheckBorder;
+    [SerializeField] private int[] healthLevels;
+    [SerializeField] private int healthLevel;
+
+    [Header("Cosmetic effects")]
+    [SerializeField] private SpriteRenderer bodySprite;
+    [SerializeField] private Sprite[] bodySprites;
 
     private int health;
+
+    private bool isPlayerDead = false;
 
     public delegate void PlayerStatusEvent();
     public PlayerStatusEvent OnPlayerDeath;
 
     private void Start()
     {
-        health = maxHealth;
+        HealthLevelInitialize();
         OnPlayerDeath += PlayerDead;
+    }
+    private void HealthLevelInitialize()
+    {
+        healthLevel = SaveSystem.LoadData(SaveSystem.Type.healthLevel);
+        maxHealth = healthLevels[healthLevel];
+        health = maxHealth;
+        bodySprite.sprite = bodySprites[healthLevel];
     }
     private void OnDisable()
     {
-        OnPlayerDeath += PlayerDead;
+        OnPlayerDeath -= PlayerDead;
     }
 
     public delegate void OnTakeDamageEvent(int currentHealth);
@@ -51,14 +66,18 @@ public class PlayerStatus : MonoBehaviour
     }
     private void PlayerFallCheck()
     {
-        if (transform.position.y < fallCheckBorder)
+        if (transform.position.y < fallCheckBorder && !isPlayerDead)
+        {
+            isPlayerDead = true;
             OnPlayerDeath?.Invoke();
+        }
     }
 
     private void PlayerDead()
     {
         print("dead");
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

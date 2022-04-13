@@ -12,15 +12,31 @@ public class PlayerShooter : MonoBehaviour
     }
     #endregion
     [SerializeField] private KeyCode shootingKey;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private GameObject shootingParticles;
-    [SerializeField] private float projectileSpeed;
+    [SerializeField] private GameObject zapPrefab;
+    [SerializeField] private float zapDistance;
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Transform shootingDirection;
     [SerializeField] private float fireRate;
+    [SerializeField] private int damage;
+    [SerializeField] private WeaponLevel[] levels;
+    [SerializeField] private int weaponLevel;
+    [Header("Cosmetic effects")]
+    [SerializeField] private GameObject shootingParticles;
+    [SerializeField] private SpriteRenderer rightArmSprite;
+    [SerializeField] private Sprite[] armSprites;
 
     private bool isCanShoot = true;
-
+    private void Start()
+    {
+        WeaponLevelInitialize();
+    }
+    private void WeaponLevelInitialize()
+    {
+        weaponLevel = SaveSystem.LoadData(SaveSystem.Type.weaponLevel);
+        rightArmSprite.sprite = armSprites[weaponLevel];
+        damage = levels[weaponLevel].Damage;
+        fireRate = levels[weaponLevel].FireRate;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(shootingKey))
@@ -30,25 +46,24 @@ public class PlayerShooter : MonoBehaviour
     }
     public delegate void ShootEvent();
     public ShootEvent OnPlayerShoot;
-    private void Shoot()
+    public void Shoot()
     {
         if (isCanShoot)
         {
-            GameObject projectileGO = Instantiate(projectile, shootingPoint.position, Quaternion.identity);
+            Destroy(Instantiate(zapPrefab, shootingPoint), 0.5f);
+
+            RaycastHit2D hit = Physics2D.Raycast(shootingPoint.transform.position,
+                shootingDirection.transform.position, zapDistance);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.GetComponent<Drone>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<Drone>().TakeDamage(damage);
+                }
+            }
+
             Destroy(Instantiate(shootingParticles, shootingPoint), 1f);
-            Vector2 dir = new Vector2(shootingDirection.position.x - transform.position.x
-                , shootingDirection.position.y - transform.position.y);
-            projectileGO.GetComponent<Rigidbody2D>().AddForce(dir * projectileSpeed);
-            //temporary
-            //temporary
-            //temporary
-            //temporary
-            projectileGO.GetComponent<Projectile>().damage = 1;
-            //temporary
-            //temporary
-            //temporary
-            //temporary
-            Destroy(projectileGO, 2f);
             StartCoroutine(ShootRecharge());
             OnPlayerShoot?.Invoke();
         }
@@ -59,4 +74,11 @@ public class PlayerShooter : MonoBehaviour
         yield return new WaitForSeconds(fireRate);
         isCanShoot = true;
     }
+}
+
+[System.Serializable]
+public class WeaponLevel
+{
+    [SerializeField] public float FireRate;
+    [SerializeField] public int Damage;
 }

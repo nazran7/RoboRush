@@ -76,6 +76,21 @@ public class PlayerMover : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        BrokenMachine.OnRepair += PlayerStop;
+    }
+    private void OnDisable()
+    {
+        BrokenMachine.OnRepair -= PlayerStop;
+    }
+    private void PlayerStop(float time)
+    {
+        StartCoroutine(PlayerStopCoroutine(time));
+    }
+    private IEnumerator PlayerStopCoroutine(float time)
+    {
+        rb.simulated = false;
+        yield return new WaitForSeconds(time);
+        rb.simulated = true;
     }
 
     private void Update()
@@ -104,7 +119,7 @@ public class PlayerMover : MonoBehaviour
     #region MoveMethods
     private void MoveInput()
     {
-        xMoveInput = Input.GetAxisRaw("Horizontal");
+        //xMoveInput = Input.GetAxisRaw("Horizontal");
     }
     private void Move()
     {
