@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerDisplayUI : MonoBehaviour
 {
+    //store controller component
     [SerializeField] private StoreController storeController;
+    //all upgrade sprites
     [SerializeField] private SpriteRenderer[] legsSR;
     [SerializeField] private Sprite[] legSprites;
     [SerializeField] private SpriteRenderer rightArmSR;
@@ -17,6 +19,7 @@ public class PlayerDisplayUI : MonoBehaviour
 
     private void Start()
     {
+        //subscribe on ui update event
         storeController.OnUpgradeBuy += DisplayParts;
         Initialization();
     }
@@ -24,7 +27,7 @@ public class PlayerDisplayUI : MonoBehaviour
     {
         storeController.OnUpgradeBuy -= DisplayParts;
     }
-
+    //ui update method for every bodypart
     private void DisplayParts(SaveSystem.Type type, int currentLevel)
     {
         if (type == SaveSystem.Type.jetPackLevel)
@@ -47,6 +50,7 @@ public class PlayerDisplayUI : MonoBehaviour
             rightArmSR.sprite = rightArmSprites[currentLevel];
         }
     }
+    //load current upgrade level
     private void Initialization()
     {
         foreach (SpriteRenderer sr in legsSR)

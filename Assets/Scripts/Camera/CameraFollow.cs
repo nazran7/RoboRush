@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    //the object the camera is focusing on
     [SerializeField] private GameObject focusedObject;
+    //speed of camera
     [SerializeField] private float cameraSpeed;
+    // camera offset
     [SerializeField] private Vector3 offset;
 
+    //camera z position
     private const float cameraZ = -10;
+    // player mover component on focus object
     private PlayerMover pm;
+    //delegate for camera follow method
     private delegate void Follow();
     private Follow follow;
     private void Start()
     {
+        //if camera follow player - follow with offset , else if camera follow object - follow w/out offset
         if (focusedObject.GetComponent<PlayerMover>() != null)
         {
             pm = focusedObject.GetComponent<PlayerMover>();
@@ -26,12 +33,13 @@ public class CameraFollow : MonoBehaviour
     {
         follow();
     }
-
+    //follow w/out offset
     private void FollowObject()
     {
         Camera.main.transform.position = Vector3.MoveTowards(transform.position,
                     focusedObject.transform.position, cameraSpeed);
     }
+    //follow with side offset
     private void FollowPlayer()
     {
         int side;

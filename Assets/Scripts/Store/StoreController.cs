@@ -5,7 +5,7 @@ using TMPro;
 
 public class StoreController : MonoBehaviour
 {
-
+    //coin text ui
     [SerializeField] private TextMeshProUGUI coinsText;
     #region JetPackFields
     [SerializeField] private int[] jetPackUpgradeCost;
@@ -30,39 +30,44 @@ public class StoreController : MonoBehaviour
 
     private void Start()
     {
-        //ResetSave();
         UIUpdate();
     }
+    //upgrade buy event
     public delegate void UpgradeBuyEvent(SaveSystem.Type type, int currentLevel);
     public UpgradeBuyEvent OnUpgradeBuy;
-
+    //weapon upgrade buy
     public void WeaponUprade()
     {
         BuyUpgrage(SaveSystem.Type.weaponLevel, weaponUpgradeCost);
     }
+    //health upgrade buy
     public void HealthUpgrade()
     {
         BuyUpgrage(SaveSystem.Type.healthLevel, healthUpgradeCost);
     }
+    //jetpack upgrade buy
     public void JetPackUpgrade()
     {
         BuyUpgrage(SaveSystem.Type.jetPackLevel, jetPackUpgradeCost);
     }
+    //boost upgrade buy
     public void BoostUpgrade()
     {
         BuyUpgrage(SaveSystem.Type.boostLevel, boostUpgradeCost);
     }
-
+    //upgrade buy method
     private void BuyUpgrage(SaveSystem.Type type, int[] upgradeCosts)
     {
         int coins = SaveSystem.LoadData(SaveSystem.Type.coins);
         int currentLevel = SaveSystem.LoadData(type);
         if (currentLevel < upgradeCosts.Length - 1)
         {
+            //coins count check for current upgrade
             if (coins >= upgradeCosts[currentLevel + 1])
             {
                 currentLevel++;
                 coins -= upgradeCosts[currentLevel];
+                //save upgrade
                 SaveSystem.SaveData(SaveSystem.Type.coins, coins);
                 SaveSystem.SaveData(type, currentLevel);
                 UIUpdate();
@@ -71,6 +76,7 @@ public class StoreController : MonoBehaviour
         UIUpdate();
         OnUpgradeBuy?.Invoke(type , currentLevel);
     }
+    //update ui display
     private void UIUpdate()
     {
         int coins = SaveSystem.LoadData(SaveSystem.Type.coins);
@@ -89,14 +95,17 @@ public class StoreController : MonoBehaviour
     }
 
     #region displayMethods
+    //count display method
     private void DisplayCount(TextMeshProUGUI tmp, int count)
     {
         tmp.text = count.ToString();
     }
+    //string display method
     private void DisplayCount(TextMeshProUGUI tmp, string text)
     {
         tmp.text = text;
     }
+    //upgrade button ui display method
     private void DisplayUpgradeButton(SaveSystem.Type type, int[] costs, TextMeshProUGUI levelText,
         TextMeshProUGUI costText)
     {
@@ -113,10 +122,10 @@ public class StoreController : MonoBehaviour
         }
     }
     #endregion
-
+    //reset progress method
     public void ResetSave()
     {
-        SaveSystem.SaveData(SaveSystem.Type.coins, 1000);
+        SaveSystem.SaveData(SaveSystem.Type.coins, 0);
         SaveSystem.SaveData(SaveSystem.Type.jetPackLevel, 0);
         SaveSystem.SaveData(SaveSystem.Type.boostLevel, 0);
         SaveSystem.SaveData(SaveSystem.Type.healthLevel, 0);

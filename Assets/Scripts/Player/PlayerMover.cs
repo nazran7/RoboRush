@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    //singleton pattern
     #region singleton
     public static PlayerMover singleton { get; private set; }
     private void Awake()
@@ -17,14 +18,15 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float acceleration;
     [SerializeField] private float accelerationInAir;
 
+    //X axis move input
     private float xMoveInput;
-    //Stopping moving
+    //Stop moving
     private bool isMovingStopped = false;
-    private float movingStopTime = 0.15f;
     #endregion
     #region JumpFields
     [Header("JumpSettings")]
     [SerializeField] private float jumpForce;
+    //count of jumps (for multijump)
     [SerializeField] private int maxJumpCount;
     [SerializeField] private float fallSpeed;
 
@@ -42,11 +44,15 @@ public class PlayerMover : MonoBehaviour
     private float groundCheckStopTime = 0.15f;
     #endregion
     #region Events
+    //jump event
     public delegate void JumpEvent();
     public event JumpEvent OnJump;
     #endregion
+    //state of player 
     public State PlayerState;
+    //bool for side check and rotation
     public bool isFacingRight;
+    //X axis input settings
     public float XMoveInput
     {
         get
@@ -62,6 +68,7 @@ public class PlayerMover : MonoBehaviour
             xMoveInput = value;
         }
     }
+    //all types of state
     public enum State
     {
         Idle,
@@ -69,23 +76,29 @@ public class PlayerMover : MonoBehaviour
         Jumping,
         Falling,
     }
-
+    //rigidbody of player
     private Rigidbody2D rb;
+    //X component of rigidbody
     private float rbX;
+    //Y component of rigidbody
     private float rbY;
     private void Start()
     {
+        //get rigidbody component
         rb = GetComponent<Rigidbody2D>();
+        //when player repair - stop moving
         BrokenMachine.OnRepair += PlayerStop;
     }
     private void OnDisable()
     {
         BrokenMachine.OnRepair -= PlayerStop;
     }
+    //moving stop method
     private void PlayerStop(float time)
     {
         StartCoroutine(PlayerStopCoroutine(time));
     }
+    //moving stop coroutine
     private IEnumerator PlayerStopCoroutine(float time)
     {
         rb.simulated = false;
@@ -96,11 +109,6 @@ public class PlayerMover : MonoBehaviour
     private void Update()
     {
         GroundCheck();
-        MoveInput();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            JumpAction();
-        }
     }
     private void FixedUpdate()
     {
@@ -108,6 +116,7 @@ public class PlayerMover : MonoBehaviour
         RbLimitation();
         StateCheck();
     }
+    //jump method for button input
     public void JumpAction()
     {
         if (jumpCount > 0)
@@ -117,10 +126,7 @@ public class PlayerMover : MonoBehaviour
         }
     }
     #region MoveMethods
-    private void MoveInput()
-    {
-        //xMoveInput = Input.GetAxisRaw("Horizontal");
-    }
+    //move method
     private void Move()
     {
         if (!isMovingStopped)
@@ -133,22 +139,26 @@ public class PlayerMover : MonoBehaviour
     }
     #endregion
     #region JumpMethods
+    //jump method
     private void Jump()
     {
         if (jumpCount > 0)
         {
             isGroundCheckStopped = true;
+            //add force
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount--;
             StartCoroutine(GroundCheckStop());
         }
     }
+    //ground check method
     private void GroundCheck()
     {
         if (!isGroundCheckStopped)
         {
             Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
+            //ground check zone
             IsGrounded = Physics2D.OverlapCircle(playerPos - offset, radius, ground);
             if (IsGrounded)
             {
@@ -160,6 +170,7 @@ public class PlayerMover : MonoBehaviour
             }
         }
     }
+    //ground check stop
     private IEnumerator GroundCheckStop()
     {
         isGroundCheckStopped = true;
@@ -169,6 +180,7 @@ public class PlayerMover : MonoBehaviour
     }
 
     #endregion
+    //state check and update
     private void StateCheck()
     {
         if (IsGrounded && Mathf.Abs(xMoveInput) < 0.01f)
@@ -180,6 +192,7 @@ public class PlayerMover : MonoBehaviour
         else if (!IsGrounded && rbY < 0)
             PlayerState = State.Falling;
         #region Rotation
+        //rotation update 
         if (IsGrounded)
         {
             if (xMoveInput > 0.05f)
@@ -213,6 +226,7 @@ public class PlayerMover : MonoBehaviour
         }
         #endregion
     }
+    //rigidbody limitation
     private void RbLimitation()
     {
         rbX = rb.velocity.x;
@@ -244,6 +258,7 @@ public class PlayerMover : MonoBehaviour
     #region Gizmos
     private void OnDrawGizmos()
     {
+        //ground check zone draw
         #region GroundCheck
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
         Gizmos.DrawWireSphere(playerPos - offset, radius);

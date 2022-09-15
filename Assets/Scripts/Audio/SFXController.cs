@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class SFXController : MonoBehaviour
 {
+    //SFX audio clips
     [SerializeField] private AudioClip _coinTakeSound;
     [SerializeField] private AudioClip _zapSound;
     [SerializeField] private AudioClip _explosionSound;
     [SerializeField] private AudioClip _jetPackSound;
 
+    //Audio Source on this game object
     private AudioSource _audioSource;
     void Start()
     {
+        //get audio source component
         _audioSource = GetComponent<AudioSource>();
+        //Subscribe on events for audio play
         PlayerItemPicker.singleton.OnCoinTake += CoinTakeSoundPlay;
         Drone.OnEnemyDestroy += ExplosionSoundPlay;
         PlayerShooter.singleton.OnPlayerShoot += ZapSoundPlay;
@@ -21,12 +25,15 @@ public class SFXController : MonoBehaviour
     }
     private void OnDestroy()
     {
+        //Unsubscribe
         PlayerItemPicker.singleton.OnCoinTake -= CoinTakeSoundPlay;
         Drone.OnEnemyDestroy -= ExplosionSoundPlay;
         PlayerShooter.singleton.OnPlayerShoot -= ZapSoundPlay;
         PlayerJetPack.OnJetPackFly -= JetPackSoundPlay;
         PlayerBoost.OnBoostFly -= JetPackSoundPlay;
     }
+
+    //Coin sound play
     private void CoinTakeSoundPlay(int forDelegate)
     {
         if (_coinTakeSound != null)
@@ -35,6 +42,7 @@ public class SFXController : MonoBehaviour
             _audioSource.Play();
         }
     }
+    //Explosion sound play
     private void ExplosionSoundPlay()
     {
         if (_explosionSound != null)
@@ -43,6 +51,7 @@ public class SFXController : MonoBehaviour
             _audioSource.Play();
         }
     }
+    //Zap sound play
     private void ZapSoundPlay()
     {
         if (_zapSound != null)
@@ -51,6 +60,7 @@ public class SFXController : MonoBehaviour
             _audioSource.Play();
         }
     }
+    //Jet sound play
     private void JetPackSoundPlay()
     {
         if (_jetPackSound != null)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
+    //enemy fields
     [SerializeField] private float speed;
     [SerializeField] private Vector3 movingPoint;
     [SerializeField] private GameObject projectile;
@@ -15,10 +16,15 @@ public class Drone : MonoBehaviour
     [SerializeField] private GameObject explosionParticles;
     [SerializeField] private int health;
 
+    //bool for check player on trigger zone
     private bool isPlayerOnZone = false;
+    //moving coroutine
     private IEnumerator movingCoroutine;
+    //shooting loop coroutine
     private IEnumerator shootingCoroutine;
+    //start moving position
     private Vector3 startPos;
+    //end position
     private Vector3 endPos;
     private void Start()
     {
@@ -27,6 +33,7 @@ public class Drone : MonoBehaviour
         StartMoving();
     }
     #region moving
+    //start moving coroutine
     private void StartMoving()
     {
         movingCoroutine = MoveTo();
@@ -34,16 +41,19 @@ public class Drone : MonoBehaviour
             StopCoroutine(shootingCoroutine);
         StartCoroutine(movingCoroutine);
     }
+    //moving coroutine
     private IEnumerator MoveTo()
     {
         while (true)
         {
+            //moving to end position
             Rotation(endPos.x);
             while (transform.position != endPos)
             {
                 transform.position = Vector3.MoveTowards(transform.position, endPos, speed / 100);
                 yield return new WaitForFixedUpdate();
             }
+            //moving to start position
             Rotation(startPos.x);
             while (transform.position != startPos)
             {
@@ -53,7 +63,7 @@ public class Drone : MonoBehaviour
 
         }
     }
-
+    //turn in the direction of moving
     private void Rotation(float x)
     {
         if ((transform.position.x - x) > 0)
@@ -66,12 +76,13 @@ public class Drone : MonoBehaviour
         }
     }
 
+    //gizmos to draw way of moving
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + movingPoint);
     }
     #endregion
-
+    //finding player on trigger zone and start shooting
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerStatus>() != null)
@@ -88,32 +99,32 @@ public class Drone : MonoBehaviour
             StartMoving();
         }
     }
+
+    //shooting loop coroutine
     private IEnumerator ShootingLoop(GameObject target)
     {
         while (isPlayerOnZone)
         {
+            //look on player
             Rotation(target.transform.position.x);
             yield return new WaitForSeconds(shootingRate);
+            //finding the shooting direction
             Vector2 shootingDir = new Vector2(target.transform.position.x - transform.position.x
                 , target.transform.position.y - transform.position.y).normalized;
+            //spawn projectile
             GameObject projectileGO = Instantiate(projectile,
                 shootingPoint.transform.position, Quaternion.identity);
+            //spawn shooting particles
             Destroy(Instantiate(shootingParticles,
                 shootingPoint.transform.position, Quaternion.identity), 1f);
+            //add force to projectile
             projectileGO.GetComponent<Rigidbody2D>().AddForce(shootingDir * projectileSpeed);
             projectileGO.GetComponent<DroneProjectile>().Damage = projectileDamege;
+            //destroy projectile after 2 sec
             Destroy(projectileGO, 2f);
         }
     }
-    private bool VisibleCheck(GameObject target)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position);
-        print(hit.collider.gameObject);
-        if (hit.collider.gameObject.GetComponent<PlayerStatus>() != null)
-            return true;
-        else
-            return false;
-    }
+    //stop moving coroutine and start shooting coroutine
     private void StartShooting(GameObject target)
     {
         shootingCoroutine = ShootingLoop(target);
@@ -121,12 +132,14 @@ public class Drone : MonoBehaviour
             StopCoroutine(movingCoroutine);
         StartCoroutine(shootingCoroutine);
     }
-
+    //event on enemy kill
     public delegate void EnemyDestroyEvent();
     public static EnemyDestroyEvent OnEnemyDestroy;
+    //take damage method
     public void TakeDamage(int damage)
     {
         health -= damage;
+        //if health <= 0 - enemy died
         if (health <= 0)
         {
             health = 0;
@@ -136,9 +149,11 @@ public class Drone : MonoBehaviour
         }
         else
         {
+            //damage indication
             StartCoroutine(DamageIndication());
         }
     }
+    //color switch on take damage
     private IEnumerator DamageIndication()
     {
         SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
