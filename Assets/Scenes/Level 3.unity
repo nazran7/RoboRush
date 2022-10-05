@@ -2916,7 +2916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3024126449007436501, guid: ab7eb77a69ad8a947810df97ab4065a6, type: 3}
       propertyPath: levelNumber
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3024126449007436501, guid: ab7eb77a69ad8a947810df97ab4065a6, type: 3}
       propertyPath: isRemainTimePayed

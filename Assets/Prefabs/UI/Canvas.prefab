@@ -311,7 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286484247}
   - component: {fileID: 286484248}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Interface buttons set for space games 7_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286484246}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4050.7402}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 15, y: 15, z: 45.00822}
   m_Children: []
   m_Father: {fileID: 1507470692}
@@ -1329,7 +1329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1565802091}
   - component: {fileID: 1565802092}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Interface buttons set for space games 7_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1344,7 +1344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565802090}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4050.7402}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 15, y: 15, z: 45.00822}
   m_Children: []
   m_Father: {fileID: 265588617}
@@ -1411,7 +1411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2088723053}
   - component: {fileID: 2088723054}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Interface buttons set for space games 7_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1426,7 +1426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088723052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4050.7402}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 15, y: 15, z: 45.00822}
   m_Children: []
   m_Father: {fileID: 1462523657}
@@ -2864,6 +2864,8 @@ MonoBehaviour:
   timerText: {fileID: 9072409871615786400}
   timeForLevel: 60
   healthBar: {fileID: 9072409871994390345}
+  jetPackButton: {fileID: 1462523656}
+  boostButton: {fileID: 265588616}
 --- !u!1 &9072409870953963625
 GameObject:
   m_ObjectHideFlags: 0

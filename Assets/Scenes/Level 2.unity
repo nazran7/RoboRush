@@ -2165,7 +2165,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1585401464728361377, guid: a2fb2ce7309e4774d8f1ec807d1c2ce0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1585401464728361377, guid: a2fb2ce7309e4774d8f1ec807d1c2ce0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2918,7 +2918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3024126449007436501, guid: ab7eb77a69ad8a947810df97ab4065a6, type: 3}
       propertyPath: levelNumber
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3024126449007436501, guid: ab7eb77a69ad8a947810df97ab4065a6, type: 3}
       propertyPath: isRemainTimePayed
@@ -3183,18 +3183,6 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1374227899}
-    - target: {fileID: 286484246, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 286484247, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 286484248, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 496401797, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3227,22 +3215,6 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1374227898}
-    - target: {fileID: 1565802090, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1565802091, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2088723052, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2088723053, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 9072409870101963763, guid: 53e72c8ff9104ec4da21b1241effc920, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

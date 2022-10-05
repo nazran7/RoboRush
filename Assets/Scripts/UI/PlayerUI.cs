@@ -19,6 +19,8 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private int timeForLevel;
     [SerializeField] private Image healthBar;
+    [SerializeField] private GameObject jetPackButton;
+    [SerializeField] private GameObject boostButton;
     //remain time static
     public static int remainTime;
     private void Start()
@@ -28,6 +30,7 @@ public class PlayerUI : MonoBehaviour
         //subscribe on health change event
         PlayerStatus.singleton.OnTakeDamage += HealthBarChange;
         StartCoroutine(Timer());
+        ButtonsInitialize();
     }
     private void OnDisable()
     {
@@ -61,5 +64,13 @@ public class PlayerUI : MonoBehaviour
     {
         float healthBarState = ((float)currentHealth) / ((float)PlayerStatus.singleton.maxHealth);
         healthBar.fillAmount = healthBarState;
+    }
+
+    private void ButtonsInitialize()
+    {
+        if (SaveSystem.LoadData(SaveSystem.Type.boostLevel) == 0)
+            boostButton.SetActive(false);
+        if (SaveSystem.LoadData(SaveSystem.Type.jetPackLevel) == 0)
+            jetPackButton.SetActive(false);
     }
 }
