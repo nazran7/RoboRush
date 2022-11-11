@@ -216,6 +216,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1660,6 +1661,71 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Interface buttons set for space games 2_42: 794666276757640859
+      Interface buttons set for space games 2_29: 4092199742319400351
+      Interface buttons set for space games 2_33: 41141728111200948
+      Interface buttons set for space games 2_8: 8991047847376123029
+      Interface buttons set for space games 2_26: 2920426851848804174
+      Interface buttons set for space games 2_3: -609882873645622305
+      Interface buttons set for space games 2_52: -5337184359495706144
+      Interface buttons set for space games 2_36: -6285276788735671270
+      Interface buttons set for space games 2_60: -9194116730193507843
+      Interface buttons set for space games 2_1: -7923808103748464066
+      Interface buttons set for space games 2_23: 102983761079405055
+      Interface buttons set for space games 2_38: -2019141434227716743
+      Interface buttons set for space games 2_7: -8532726829905619266
+      Interface buttons set for space games 2_14: -8388501637482257421
+      Interface buttons set for space games 2_17: -7090395235208943000
+      Interface buttons set for space games 2_47: 102454046335685053
+      Interface buttons set for space games 2_43: -6757080089599050986
+      Interface buttons set for space games 2_16: 8631567809536346602
+      Interface buttons set for space games 2_6: -2404265983755004433
+      Interface buttons set for space games 2_48: 207713840460907499
+      Interface buttons set for space games 2_11: 3903836422013144226
+      Interface buttons set for space games 2_15: 1063226934728859885
+      Interface buttons set for space games 2_40: -7215878186792448285
+      Interface buttons set for space games 2_53: 6410326131252262223
+      Interface buttons set for space games 2_9: -2108936105269589609
+      Interface buttons set for space games 2_39: -7155080552110109584
+      Interface buttons set for space games 2_10: -6447008062695476235
+      Interface buttons set for space games 2_4: -5594065603781841631
+      Interface buttons set for space games 2_21: -1033781963833823463
+      Interface buttons set for space games 2_13: 7756948195246987938
+      UP: 8243512294445470014
+      Interface buttons set for space games 2_55: -8088739528071400245
+      Interface buttons set for space games 2_57: 3821754053268134788
+      Interface buttons set for space games 2_35: 4849637146635845790
+      Interface buttons set for space games 2_24: 8004164941053911102
+      Interface buttons set for space games 2_44: 77477865180493023
+      Interface buttons set for space games 2_56: 73618914976154022
+      Interface buttons set for space games 2_45: -1953040314264788440
+      Interface buttons set for space games 2_32: 6995129801924055968
+      Interface buttons set for space games 2_51: -528699678169818596
+      Interface buttons set for space games 2_54: -535934183063081613
+      Interface buttons set for space games 2_18: -2521774451118420673
+      Interface buttons set for space games 2_25: -88479197416185349
+      Interface buttons set for space games 2_63: 6496205683467890830
+      Interface buttons set for space games 2_61: 3067505026035312880
+      Interface buttons set for space games 2_59: 6116999614530809546
+      Interface buttons set for space games 2_58: -4296402060525865619
+      Interface buttons set for space games 2_12: 6599546669838872761
+      Interface buttons set for space games 2_28: 305445565103803303
+      Interface buttons set for space games 2_20: -7485058320166268888
+      Interface buttons set for space games 2_31: 2084237116143806184
+      Interface buttons set for space games 2_30: -5291785737418926070
+      Interface buttons set for space games 2_50: 1523606441834155706
+      Interface buttons set for space games 2_0: 788248846421670155
+      Interface buttons set for space games 2_27: 2873749988560240860
+      Interface buttons set for space games 2_34: -7837055488879913317
+      Interface buttons set for space games 2_37: -6467845241859885209
+      Interface buttons set for space games 2_62: -1224094248606242780
+      Interface buttons set for space games 2_2: -2939399507875595245
+      Interface buttons set for space games 2_41: 8313648091243268736
+      Interface buttons set for space games 2_19: -6864785412260221674
+      Interface buttons set for space games 2_5: 4535380533163592102
+      Interface buttons set for space games 2_49: 6461267108741317193
+      Interface buttons set for space games 2_46: 4262334174575677811
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

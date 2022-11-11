@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -268,6 +269,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Cyborg_attack1_1: 5899521237771897975
+      Cyborg_attack1_2: 4788302920996027078
+      Cyborg_attack1_3: 1046479873637546903
+      Cyborg_attack1_4: -5659418199009509913
+      Cyborg_attack1_5: -8145677253605179413
+      Cyborg_attack1_0: 2107155895000604700
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

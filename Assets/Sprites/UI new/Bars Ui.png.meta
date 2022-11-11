@@ -63,6 +63,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -436,6 +437,20 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Interface buttons set for space games 10_6: 3885944339876692599
+      Interface buttons set for space games 10_1: -6353988142897288720
+      Interface buttons set for space games 10_10: -7319881530017732615
+      Interface buttons set for space games 10_8: 108875796305894293
+      Interface buttons set for space games 10_5: -7049004629498253147
+      Interface buttons set for space games 10_3: 8689283665553939625
+      Interface buttons set for space games 10_4: 6448542521117959671
+      Interface buttons set for space games 10_11: -2074236132653448377
+      Interface buttons set for space games 10_2: -341456994143058867
+      Interface buttons set for space games 10_9: 441538902487720640
+      Interface buttons set for space games 10_0: 303215026090651893
+      Interface buttons set for space games 10_7: -7085533288776199828
+      Interface buttons set for space games 10_12: -8983780096812278814
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

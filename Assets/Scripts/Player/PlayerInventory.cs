@@ -23,6 +23,7 @@ public class PlayerInventory : MonoBehaviour
         PlayerItemPicker.singleton.OnCoinTake += CoinCountChange;
         BrokenMachine.OnCoinAdd += CoinCountChange;
         //load coin count from save system
+        SaveSystem.CheckCoins(FindObjectOfType<LevelEndCheckPoint>().levelNumber);
         coins = SaveSystem.LoadData(SaveSystem.Type.coins);
         //update ui
         CoinCountChange(0);
@@ -43,7 +44,8 @@ public class PlayerInventory : MonoBehaviour
         {
             coins += count;
             //save coin count
-            SaveSystem.SaveData(SaveSystem.Type.coins, coins);
+            //SaveSystem.SaveData(SaveSystem.Type.coins, coins);
+            SaveSystem.SaveCoins(FindObjectOfType<LevelEndCheckPoint>().levelNumber, coins);
             OnCoinChange?.Invoke(coins);
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.UI;
 public class StoreController : MonoBehaviour
 {
     //coin text ui
@@ -28,9 +28,14 @@ public class StoreController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI weaponUpgradeCostText;
     #endregion
 
+    public Button[] powerUPButtons;
+    public GameObject[] arrows;
+
     private void Start()
     {
         UIUpdate();
+        AllowPowerUps();
+        ShowArrows();
     }
     //upgrade buy event
     public delegate void UpgradeBuyEvent(SaveSystem.Type type, int currentLevel);
@@ -74,7 +79,7 @@ public class StoreController : MonoBehaviour
             }
         }
         UIUpdate();
-        OnUpgradeBuy?.Invoke(type , currentLevel);
+        OnUpgradeBuy?.Invoke(type, currentLevel);
     }
     //update ui display
     private void UIUpdate()
@@ -137,5 +142,34 @@ public class StoreController : MonoBehaviour
         OnUpgradeBuy?.Invoke(SaveSystem.Type.healthLevel, 0);
         OnUpgradeBuy?.Invoke(SaveSystem.Type.weaponLevel, 0);
         UIUpdate();
+    }
+
+    public void AllowPowerUps()
+    {
+        Debug.Log("lvevl " + SaveSystem.LoadData(SaveSystem.Type.openedLevels));
+        if (SaveSystem.LoadData(SaveSystem.Type.openedLevels) > 1)
+        {
+            for (int i = 0; i < powerUPButtons.Length; i++)
+            {
+                powerUPButtons[i].interactable = false;
+            }
+
+            for (int i = 1; i < SaveSystem.LoadData(SaveSystem.Type.openedLevels); i++)
+            {
+                powerUPButtons[i - 1].interactable = true;
+            }
+        }
+    }
+    public void ShowArrows()
+    {
+        if (SaveSystem.LoadData(SaveSystem.Type.openedLevels) > 4 || SaveSystem.LoadData(SaveSystem.Type.openedLevels) < 2)
+        {
+            return;
+        }
+        for (int i = 1; i < arrows.Length; i++)
+        {
+            arrows[i - 1].SetActive(false);
+        }
+        arrows[SaveSystem.LoadData(SaveSystem.Type.openedLevels) - 2].SetActive(true);
     }
 }

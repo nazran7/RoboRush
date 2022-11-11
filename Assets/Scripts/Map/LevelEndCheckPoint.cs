@@ -15,7 +15,7 @@ public class LevelEndCheckPoint : MonoBehaviour
     //pay for remain time on/off
     [SerializeField] private bool isRemainTimePayed;
     //number of level
-    [SerializeField] private int levelNumber;
+    [SerializeField] public int levelNumber;
 
     public delegate void LevelEndEvent();
     //level end event
