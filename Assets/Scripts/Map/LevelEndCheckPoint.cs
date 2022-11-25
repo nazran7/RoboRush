@@ -1,3 +1,4 @@
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class LevelEndCheckPoint : MonoBehaviour
     [SerializeField] private bool isRemainTimePayed;
     //number of level
     [SerializeField] public int levelNumber;
-
     public delegate void LevelEndEvent();
     //level end event
     public LevelEndEvent OnLevelEnd;
@@ -31,6 +31,9 @@ public class LevelEndCheckPoint : MonoBehaviour
             if (isRemainTimePayed)
                 OnCoinsAddForLevelEnd?.Invoke();
             SaveSystem.SaveData(SaveSystem.Type.openedLevels, levelNumber);
+            VideoManager.instance.StartVideo();
         }
     }
+
+
 }

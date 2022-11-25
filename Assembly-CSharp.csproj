@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Map\LevelEndCheckPoint.cs" />
     <Compile Include="Assets\Scripts\Enemy\DroneProjectile.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShooter.cs" />
+    <Compile Include="Assets\Scripts\Video\VideoManager.cs" />
     <Compile Include="Assets\Scripts\UI\PanelsUI.cs" />
     <Compile Include="Assets\Scripts\UI\Settings.cs" />
   </ItemGroup>

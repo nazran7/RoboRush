@@ -73,4 +73,13 @@ public class PlayerUI : MonoBehaviour
         if (SaveSystem.LoadData(SaveSystem.Type.jetPackLevel) == 0)
             jetPackButton.SetActive(false);
     }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    public void UnPause()
+    {
+        Time.timeScale = 2;
+    }
 }

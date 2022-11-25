@@ -136,7 +136,7 @@ public class StoreController : MonoBehaviour
         SaveSystem.SaveData(SaveSystem.Type.healthLevel, 0);
         SaveSystem.SaveData(SaveSystem.Type.weaponLevel, 0);
         SaveSystem.SaveData(SaveSystem.Type.openedLevels, 0);
-
+        Debug.Log("level " + PlayerPrefs.GetInt("openedLevels"));
         OnUpgradeBuy?.Invoke(SaveSystem.Type.jetPackLevel, 0);
         OnUpgradeBuy?.Invoke(SaveSystem.Type.boostLevel, 0);
         OnUpgradeBuy?.Invoke(SaveSystem.Type.healthLevel, 0);
@@ -146,7 +146,6 @@ public class StoreController : MonoBehaviour
 
     public void AllowPowerUps()
     {
-        Debug.Log("lvevl " + SaveSystem.LoadData(SaveSystem.Type.openedLevels));
         if (SaveSystem.LoadData(SaveSystem.Type.openedLevels) > 1)
         {
             for (int i = 0; i < powerUPButtons.Length; i++)

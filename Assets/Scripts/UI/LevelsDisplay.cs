@@ -8,7 +8,7 @@ public class LevelsDisplay : MonoBehaviour
     [SerializeField] private GameObject[] levels;
 
 
-    private void Start()
+    private void OnEnable()
     {
         //display opened levels
         for (int i = 0; i <= OpenedLevels(); i++)
@@ -20,5 +20,12 @@ public class LevelsDisplay : MonoBehaviour
     private int OpenedLevels()
     {
         return SaveSystem.LoadData(SaveSystem.Type.openedLevels);
+    }
+    private void OnDisable()
+    {
+        for (int i = 1; i <= OpenedLevels(); i++)
+        {
+            levels[i].SetActive(false);
+        }
     }
 }
